@@ -1,0 +1,36 @@
+	package:
+	  name: seepy
+	  version: 0.0.1
+	
+	source:
+	  path: /Users/supercgor/Documents/test_code/seepy
+	 
+	build:
+	  number: 0
+	
+	requirements:
+	  build:
+	    - python >=3.9
+	    - setuptools
+	  run:
+	    - python >=3.9
+	    - numpy >=1.20
+	    - scipy
+      - numba
+	    - pandas
+	    - ase
+	    - scikit-learn >=0.22
+	    - matplotlib
+	
+	test:
+	  source_files:
+	    - run_test.py
+
+	about:
+	  home: https://github.com/supercgor/seepy
+	  license: MIT
+	  summary: SNP data preprocessing, population structure analysis, SNP selection, phenotype prediction, and data visualization
+	  description: Crop Genomic Breeding machine (CropGBM) is a multifunctional program that integrates SNP data preprocessing, population structure analysis, SNP selection, phenotype prediction, and data visualization.
+	  doc_url: https://ibreeding.github.io/
+	  dev_url: https://github.com/supercgor/seepy
+
