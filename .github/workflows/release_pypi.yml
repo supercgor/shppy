@@ -1,4 +1,4 @@
-name: release
+name: release_pypi
 
 on:
   workflow_dispatch:
@@ -26,11 +26,11 @@ jobs:
       - name: Check metadata
         run: pipx run twine check dist/*
 
-  publish:
+  publish_on_pypi:
     needs: [build]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
-
+  
     steps:
       - name: Download SDist and wheel
         uses: actions/download-artifact@v3
@@ -42,3 +42,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@v1.6.4
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+  
