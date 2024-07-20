@@ -1,9 +1,9 @@
 	package:
-	  name: seepy
+	  name: shppy
 	  version: 0.0.1
 	
 	source:
-	  path: /Users/supercgor/Documents/test_code/seepy
+	  path: ShpPy/
 	 
 	build:
 	  number: 0
@@ -27,10 +27,10 @@
 	    - run_test.py
 
 	about:
-	  home: https://github.com/supercgor/seepy
+	  home: https://github.com/supercgor/shppy
 	  license: MIT
 	  summary: SNP data preprocessing, population structure analysis, SNP selection, phenotype prediction, and data visualization
 	  description: Crop Genomic Breeding machine (CropGBM) is a multifunctional program that integrates SNP data preprocessing, population structure analysis, SNP selection, phenotype prediction, and data visualization.
-	  doc_url: https://ibreeding.github.io/
-	  dev_url: https://github.com/supercgor/seepy
+	  # doc_url: https://ibreeding.github.io/
+	  dev_url: https://github.com/supercgor/shppy
 
