@@ -1,5 +1,4 @@
 channels:    # write here the list of channels to look for your library dependencies
-  - supercgor
   - conda-forge
   - default
 
