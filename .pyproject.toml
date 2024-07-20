@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=65", "setuptools_scm[toml]>=6.2"]
+
+[project]
+name = "ShpPy"
+dynamic = ["version"]
+description = "Season's High Performance library for Python"
+readme = "README.md"
+license = {text = "LGPL-2.1"}
+authors = [
+    { name = "Chon-Hei Lo", email = "siumabon123@gmail.com"},
+]
+requires-python = ">=3.9"
+keywords = ["Numerical computing",
+            "High-performance computing",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+]
+dependencies = [
+    "numpy",
+    "numba",
+    "scipy",
+    "matplotlib",
+    "pandas",
+]
+[project.urls]
+Homepage = "https://github.com/supercgor/shppy"
+"Bug Tracker" = "https://github.com/supercgor/shppy/issues"
+Changelog = "https://github.com/supercgor/shppy/releases"
+Documentation = "https://shppy.readthedocs.io"
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["docker", "docs*", "examples*"]
+
+[tool.setuptools_scm]
+write_to = "shppy/_version.py"
