@@ -1,6 +1,0 @@
-{% set pyproject = load_file_data('../pyproject.toml') %}
-{% set poetry = pyproject.get('tool', {}).get('poetry') %}
-
-package:
-  name: {{ poetry.get('name') }}
-  version: {{ poetry.get('version') }}
