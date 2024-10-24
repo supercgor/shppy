@@ -1,29 +1,32 @@
 [build-system]
-requires = ["setuptools>=65", "setuptools_scm[toml]>=6.2"]
+requires = ["scikit-build-core>=0.3.3"]
+build-backend = "scikit_build_core.build"
 
 [project]
-name = "ShpPy"
+name = "SeePy"
 dynamic = ["version"]
-description = "Season's High Performance library for Python"
+description="A tool library for the ice research"
 readme = "README.md"
-license = {text = "LGPL-2.1"}
+
 authors = [
-    { name = "Chon-Hei Lo", email = "siumabon123@gmail.com"},
+  { name = "Season Lo", email = "chlo-mo@outlook.com" },
 ]
-requires-python = ">=3.9"
+
 keywords = ["Numerical computing",
             "High-performance computing",
 ]
+
+requires-python = ">=3.9"
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Topic :: Scientific/Engineering",
-    "Topic :: Software Development",
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
+
 dependencies = [
     "numpy",
     "numba",
@@ -31,15 +34,68 @@ dependencies = [
     "matplotlib",
     "pandas",
 ]
-[project.urls]
-Homepage = "https://github.com/supercgor/shppy"
-"Bug Tracker" = "https://github.com/supercgor/shppy/issues"
-Changelog = "https://github.com/supercgor/shppy/releases"
-Documentation = "https://shppy.readthedocs.io"
 
-[tool.setuptools.packages.find]
-where = ["."]
-exclude = ["docker", "docs*", "examples*"]
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.scikit-build]
+wheel.expand-macos-universal-tags = true
+
+[tool.scikit-build.metadata]
+version.provider = "scikit_build_core.metadata.setuptools_scm"
 
 [tool.setuptools_scm]
-write_to = "shppy/_version.py"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+xfail_strict = true
+log_cli_level = "INFO"
+filterwarnings = [
+  "error",
+  "ignore::pytest.PytestCacheWarning",
+]
+testpaths = ["tests"]
+
+[tool.cibuildwheel]
+build-frontend = "build"
+test-command = "pytest {project}/tests"
+test-extras = ["test"]
+
+[tool.cibuildwheel.pyodide]
+environment.CFLAGS = "-fexceptions"
+environment.LDFLAGS = "-fexceptions"
+build-frontend = {name = "build", args = ["--exports", "whole_archive"]}
+
+[tool.ruff.lint]
+extend-select = [
+  "B",           # flake8-bugbear
+  "I",           # isort
+  "ARG",         # flake8-unused-arguments
+  "C4",          # flake8-comprehensions
+  "EM",          # flake8-errmsg
+  "ICN",         # flake8-import-conventions
+  "G",           # flake8-logging-format
+  "PGH",         # pygrep-hooks
+  "PIE",         # flake8-pie
+  "PL",          # pylint
+  "PT",          # flake8-pytest-style
+  "PTH",         # flake8-use-pathlib
+  "RET",         # flake8-return
+  "RUF",         # Ruff-specific
+  "SIM",         # flake8-simplify
+  "T20",         # flake8-print
+  "UP",          # pyupgrade
+  "YTT",         # flake8-2020
+  "EXE",         # flake8-executable
+  "NPY",         # NumPy specific rules
+  "PD",          # pandas-vet
+]
+ignore = [
+  "PLR09",    # Too many X
+  "PLR2004",  # Magic comparison
+]
+isort.required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
