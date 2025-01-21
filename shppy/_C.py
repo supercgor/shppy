@@ -9,7 +9,7 @@ from typing import Callable
 try:
     _lib = load_library(f"libshppy", os.path.abspath(__file__))
 except OSError:
-    _lib = load_library(f"shppy", os.path.abspath(__file__))
+    raise OSError(f"No shared library found in {os.listdir(os.path.dirname(os.path.abspath(__file__)))}")
 
 
 def add_floats(x: float, y: float) -> float: ...
