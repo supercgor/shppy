@@ -23,3 +23,10 @@ shppy/_version.py
 
 # PyCharm
 .idea/
+
+# DLL
+*.dll
+*.dylib
+*.so
+
+.DS_Store
