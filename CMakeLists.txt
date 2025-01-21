@@ -18,7 +18,7 @@ list(REMOVE_ITEM SOURCES shppy/_core/main.cpp)
 
 add_library(_C SHARED ${SOURCES})
 
-set_target_properties(_C PROPERTIES POSITION_INDEPENDENT_CODE ON LIBRARY_OUTPUT_NAME "shppy")
+set_target_properties(_C PROPERTIES POSITION_INDEPENDENT_CODE ON LIBRARY_OUTPUT_NAME "shppy" OUTPUT_NAME "shppy")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_executable(_debug shppy/_core/main.cpp)
