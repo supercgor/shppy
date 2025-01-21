@@ -6,7 +6,10 @@ from ctypes import c_float, c_void_p, c_long
 from numpy.ctypeslib import load_library
 from typing import Callable
 
-_lib = load_library(f"libshppy", os.path.abspath(__file__))
+try:
+    _lib = load_library(f"libshppy", os.path.abspath(__file__))
+except OSError:
+    _lib = load_library(f"shppy", os.path.abspath(__file__))
 
 
 def add_floats(x: float, y: float) -> float: ...
