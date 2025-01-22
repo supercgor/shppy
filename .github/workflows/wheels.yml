@@ -45,6 +45,8 @@ jobs:
         submodules: true
 
     - uses: pypa/cibuildwheel@v2.22
+      env:
+        CIBW_SKIP: "pp*"
 
     - name: Verify clean directory
       run: git diff --exit-code
