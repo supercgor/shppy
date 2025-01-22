@@ -12,7 +12,7 @@ authors = [
   { name = "Season Lo", email = "chlo-mo@outlook.com" },
 ]
 
-dependencies = ["numpy"]
+dependencies = ["numpy", "scipy", "numba", "networkx"]
 
 keywords = ["Numerical computing",
             "High-performance computing",
@@ -66,7 +66,7 @@ build-verbosity = 1
 
 # Run pytest to ensure that the package was correctly built
 test-command = "pytest {project}/tests"
-test-requires = "pytest numpy scipy numba networkx"
+test-requires = "pytest"
 
 test-skip="cp38-macosx_*:arm64"
 
