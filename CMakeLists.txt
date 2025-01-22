@@ -9,6 +9,11 @@ project(${SKBUILD_PROJECT_NAME} VERSION ${SKBUILD_PROJECT_VERSION})
 set(PROJECT_LANGUAGES CXX)  # Start with just CXX as the default language
 set(CMAKE_CXX_STANDARD 17)  # Set the C++ standard to C++17
 
+if (WIN32)
+    set (CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set (BUILD_SHARED_LIBS TRUE)
+endif ()
+
 # Find the module development requirements (requires FindPython from 3.17 or
 # scikit-build-core's built-in backport)
 find_package(Python REQUIRED COMPONENTS Interpreter)
@@ -32,11 +37,7 @@ add_custom_command(TARGET _C POST_BUILD
 
 target_compile_definitions(_C PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-if(WIN32)
-    install(TARGETS _C RUNTIME DESTINATION shppy)
-else()
-    install(TARGETS _C LIBRARY DESTINATION shppy)
-endif()
+install(TARGETS _C LIBRARY DESTINATION shppy)
 
 # ====== ADDITION FOR EXECUTABLE GENERATION ======
 
