@@ -32,7 +32,11 @@ add_custom_command(TARGET _C POST_BUILD
 
 target_compile_definitions(_C PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-install(TARGETS _C LIBRARY DESTINATION shppy)
+if(WIN32)
+    install(TARGETS _C RUNTIME DESTINATION shppy)
+else()
+    install(TARGETS _C LIBRARY DESTINATION shppy)
+endif()
 
 # ====== ADDITION FOR EXECUTABLE GENERATION ======
 
