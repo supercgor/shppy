@@ -54,7 +54,7 @@ jobs:
 
     - name: Upload wheels
       uses: actions/upload-artifact@v4
-      with:
+      with: 
         path: wheelhouse/*.whl
         name: dist-${{ matrix.os }}
 
@@ -68,7 +68,6 @@ jobs:
     - uses: actions/setup-python@v5
     - uses: actions/download-artifact@v4
       with:
-        name: dist
         pattern: dist-*
         merge-multiple: true
 
