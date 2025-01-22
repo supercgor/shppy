@@ -6,15 +6,7 @@ from ctypes import c_float, c_void_p, c_long
 from numpy.ctypeslib import load_library
 from typing import Callable
 
-if sys.platform.startswith("win"):
-    from ctypes import WinDLL
-    _lib = WinDLL(os.path.join(os.path.dirname(os.path.abspath(__file__)), "libshppy.dll"))
-else:
-    from ctypes import CDLL
-    if sys.platform.startswith("darwin"):
-        _lib = CDLL(os.path.join(os.path.dirname(os.path.abspath(__file__)), "libshppy.dylib"))
-    else:
-        _lib = CDLL(os.path.join(os.path.dirname(os.path.abspath(__file__)), "libshppy.so"))
+_lib = load_library(f"libshppy", os.path.dirname(os.path.abspath(__file__)))
 
 def add_floats(x: float, y: float) -> float: ...
 
