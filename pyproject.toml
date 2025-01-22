@@ -28,10 +28,10 @@ classifiers = [
 ]
 
 dependencies = [
-    "networkx",
     "numpy",
     "numba",
-    "scipy",
+    # "scipy",
+    "networkx",
 ]
 
 [project.optional-dependencies]
