@@ -11,7 +11,6 @@ set(CMAKE_CXX_STANDARD 17)  # Set the C++ standard to C++17
 
 if (WIN32)
     set (CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-    set (BUILD_SHARED_LIBS TRUE)
 endif ()
 
 # Find the module development requirements (requires FindPython from 3.17 or
@@ -37,7 +36,8 @@ add_custom_command(TARGET _C POST_BUILD
 
 target_compile_definitions(_C PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-install(TARGETS _C LIBRARY DESTINATION shppy)
+install(TARGETS _C LIBRARY DESTINATION shppy RUNTIME DESTINATION shppy)
+
 
 # ====== ADDITION FOR EXECUTABLE GENERATION ======
 
