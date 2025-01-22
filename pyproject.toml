@@ -12,6 +12,8 @@ authors = [
   { name = "Season Lo", email = "chlo-mo@outlook.com" },
 ]
 
+dependencies = ["numpy", "scipy", "numba", "networkx"]
+
 keywords = ["Numerical computing",
             "High-performance computing",
 ]
