@@ -33,6 +33,17 @@ classifiers = [
 test = ["pytest"]
 
 [tool.scikit-build]
+# The build type to use when building the project. Valid options are: "Debug",
+# "Release", "RelWithDebInfo", "MinSizeRel", "", etc.
+cmake.build-type = "Release"
+
+# A list of packages to auto-copy into the wheel. If this is not set, it will
+# default to the first of ``src/<package>``, ``python/<package>``, or
+# ``<package>`` if they exist.  The prefix(s) will be stripped from the package
+# name inside the wheel. If a dict, provides a mapping of package name to source
+# directory.
+wheel.packages = ["shppy"]
+
 # Protect the configuration against future changes in scikit-build-core
 minimum-version = "build-system.requires"
 

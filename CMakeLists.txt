@@ -23,6 +23,7 @@ list(REMOVE_ITEM SOURCES shppy/_core/main.cpp)
 add_library(_C SHARED ${SOURCES})
 
 set_target_properties(_C PROPERTIES POSITION_INDEPENDENT_CODE ON LIBRARY_OUTPUT_NAME "shppy" OUTPUT_NAME "libshppy")
+target_compile_definitions(_C PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_executable(_debug shppy/_core/main.cpp)
@@ -30,32 +31,35 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(_debug PRIVATE DEBUG)
 endif()
 
-add_custom_command(TARGET _C POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:_C> ${CMAKE_CURRENT_SOURCE_DIR}/shppy/
-)
+# Install the library
+if(NOT "${SKBUILD_PROJECT_NAME}" STREQUAL "")
+    # Install _C to site-packages
+    install(TARGETS _C LIBRARY DESTINATION shppy RUNTIME DESTINATION shppy)
+    # Install tools scripts to bin with shppy- prefix to bin
+    file(GLOB TOOL_SCRIPTS "tools/*.py")
+    foreach(SCRIPT ${TOOL_SCRIPTS})
+        get_filename_component(SCRIPT_NAME ${SCRIPT} NAME_WE)
+        install(PROGRAMS ${SCRIPT} DESTINATION ../scripts RENAME "shppy-${SCRIPT_NAME}")
+    endforeach()
+else()
+    add_custom_command(TARGET _C POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:_C> ${CMAKE_CURRENT_SOURCE_DIR}/shppy/
+    )
+endif()
 
-target_compile_definitions(_C PRIVATE VERSION_INFO=${PROJECT_VERSION})
+# file(GLOB TOOL_SCRIPTS "tools/*.py")
+# foreach(SCRIPT ${TOOL_SCRIPTS})
+#     get_filename_component(SCRIPT_NAME ${SCRIPT} NAME_WE)
+#     install(FILES ${SCRIPT}
+#             DESTINATION  ${CMAKE_INSTALL_PREFIX}/bin
+#             RENAME "shppy-${SCRIPT_NAME}"
+#             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE 
+#                        GROUP_READ GROUP_EXECUTE
+#                        WORLD_READ WORLD_EXECUTE)
+# endforeach()
 
-install(TARGETS _C LIBRARY DESTINATION shppy RUNTIME DESTINATION shppy)
 
-
-# ====== ADDITION FOR EXECUTABLE GENERATION ======
+# ====== ADDITION FOR EXECUTABLE GEm NERATION ======
 
 # Create an executable from main.cpp
-# file(GLOB_RECURSE MAIN_SOURCES "fisea/_C/main.cpp")
-
-# if(CUDAToolkit_FOUND)
-#   add_executable(fisea_exe ${MAIN_SOURCES} ${CUDA_SOURCES})
-#   target_link_libraries(fisea_exe PRIVATE CUDA::cudart _CU)
-# else()
-#   add_executable(fisea_exe ${MAIN_SOURCES})
-# endif()
-
-# # Link pybind11 and other necessary libraries if required
-# target_link_libraries(fisea_exe PRIVATE pybind11::headers)
-
-# # Define properties for the executable
-# set_target_properties(fisea_exe PROPERTIES
-#     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-#     OUTPUT_NAME "fisea_exe"
-# )
+# file(GLOB_RECURSE MAIN_SOURCES "f 
