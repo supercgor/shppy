@@ -4,7 +4,9 @@ import ase
                  
 from typing import overload, Annotated, Literal, Union
 from numpy.typing import NDArray
-np.ndarray
+
+from .basic import *
+
 class Atoms(ase.Atoms):
     @property
     def symbols(self) -> str: ...
@@ -29,17 +31,3 @@ class Atoms(ase.Atoms):
     
     @overload
     def __getitem__(self, key: Annotated[NDArray[np.int_], Literal["N"]]) -> ase.Atoms: ...
-    
-    @property
-    def cell(self) -> np.ndarray: ...
-    
-    def get_cell(self, complete = False) -> np.ndarray: ...
-    
-    @property
-    def xs(self) -> np.ndarray: ...
-    
-    @property
-    def ys(self) -> np.ndarray: ...
-    
-    @property
-    def zs(self) -> np.ndarray: ...

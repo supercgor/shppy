@@ -30,3 +30,7 @@ shppy/_version.py
 *.so
 
 .DS_Store
+
+out/
+_debug.ipynb
+_debug.py
