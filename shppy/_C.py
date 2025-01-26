@@ -4,7 +4,6 @@ import numpy as np
 
 from ctypes import c_float, c_void_p, c_long
 from numpy.ctypeslib import load_library
-from typing import Callable
 
 _lib = load_library(f"libshppy", os.path.dirname(os.path.abspath(__file__)))
 
