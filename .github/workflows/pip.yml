@@ -35,4 +35,4 @@ jobs:
         pip install --verbose .
 
     - name: Test
-      run: python -m pytest
+      run: cd tests &&python -m pytest
