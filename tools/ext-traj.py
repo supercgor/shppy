@@ -57,6 +57,10 @@ def main(args):
     else:
         index = int(args.index)
     
+    ts_min, ts_max = read_min_max(args.ts_range)
+    z_min, z_max = read_min_max(args.z_range)
+    filter_type = literal_eval(args.filter_type)
+    
     if args.show_ts:
         ts = read_timestep(in_pth)[index]
         print(f"""[INFO] Timestep range: {ts.min()} - {ts.max()}
@@ -69,17 +73,40 @@ def main(args):
         
     if args.show_z:
         if isinstance(index, slice):
-            atoms = read(in_pth, 0)
+            atoms = read(in_pth, 0, type_map={1: 8, 2: 1})
         else:
-            atoms = read(in_pth, index)
-        zs = atoms.positions[:, 2]
-        zs, edges = np.histogram(zs, bins=args.bin, density=True)
-        print(f"""[INFO] z range: {edges[0]} - {edges[-1]}
+            atoms = read(in_pth, index, type_map={1: 8, 2: 1})
+                    
+        if filter_type:
+            atoms = atoms[np.isin(atoms.numbers, filter_type)]
+        
+        if z_min != -np.inf:
+            atoms = atoms[atoms.positions[:, 2] > z_min]
+        else:
+            z_min = atoms.positions[:, 2].min() - 1
+        
+        if z_max != np.inf:
+            atoms = atoms[atoms.positions[:, 2] < z_max]
+        else:
+            z_max = atoms.positions[:, 2].max() + 1
+            
+        zs, edges = np.histogram(atoms.positions[:, 2], range=(z_min, z_max), bins=args.bin, density=True)
+        
+        try:
+            edges_center = (edges[:-1] + edges[1:]) / 2
+            import plotext
+            plotext.theme("clear")
+            plotext.plot(edges_center, zs, fillx=True)
+            plotext.title(f"Density of atoms in z direction")
+            plotext.show()
+        except ImportError:
+            print(f"""[INFO] z range: {edges[0]} - {edges[-1]}
 +---------+-----------+
 |  start  |     z     |
 +=========+===========+
-{chr(10).join(f"| {c:>7.2f} | {z:>9.3%} |" for c, z in zip(edges[:-1], zs))}
+{chr(10).join(f"| {c:>7.2f} |" for c, z in zip(edges[:-1], zs))}
 +---------+-----------+""")
+            
         exit()
         
     name = in_pth.with_suffix("").name
@@ -107,10 +134,6 @@ def main(args):
         atoms_lst = [atoms_lst]
     
     print(f"[INFO] Processing {len(atoms_lst)} frames")
-    
-    ts_min, ts_max = read_min_max(args.ts_range)
-    z_min, z_max = read_min_max(args.z_range)
-    filter_type = literal_eval(args.filter_type)
     
     if ts_min != -np.inf:
         atoms_lst = map(lambda atoms: atoms[atoms.info['timestep'] >= ts_min], atoms_lst)
